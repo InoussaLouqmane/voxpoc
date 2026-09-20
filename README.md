@@ -198,13 +198,15 @@ vercel
 - Redéployez si besoin après l'ajout de la variable.
 
 - Une fois l'URL Vercel obtenue (ex: `https://voxpoc.vercel.app`), reportez-la dans
-  `backend/.env` :
+  `backend/.env` — `FRONTEND_URL` accepte plusieurs origines séparées par des virgules,
+  pratique pour garder le site en prod et `localhost:5173` en dev fonctionnels en même
+  temps :
 
 ```
-FRONTEND_URL=https://voxpoc.vercel.app
+FRONTEND_URL=https://voxpoc.vercel.app,http://localhost:5173
 ```
 
-Redémarrez le backend pour que le CORS autorise cette origine.
+Redémarrez le backend pour que le CORS autorise ces origines.
 
 ## Fonctionnement
 

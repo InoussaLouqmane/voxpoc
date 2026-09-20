@@ -12,7 +12,12 @@ const { handleTwilioConnection } = require("./mediaStream");
 const { handleBrowserConnection } = require("./browserStream");
 
 const PORT = process.env.PORT || 3000;
-const FRONTEND_URL = process.env.FRONTEND_URL;
+// Liste blanche explicite, pas de wildcard. Supporte plusieurs origines séparées par des
+// virgules (ex: le site Vercel en prod + localhost en dev local simultanément).
+const ALLOWED_ORIGINS = (process.env.FRONTEND_URL || "")
+  .split(",")
+  .map((url) => url.trim())
+  .filter(Boolean);
 const PUBLIC_BACKEND_URL = process.env.PUBLIC_BACKEND_URL;
 
 const requiredEnv = [
@@ -33,7 +38,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: FRONTEND_URL || false,
+    origin: ALLOWED_ORIGINS.length > 0 ? ALLOWED_ORIGINS : false,
   })
 );
 app.use(express.json());
